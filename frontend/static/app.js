@@ -1,4 +1,4 @@
-const API_URL = "http://127.0.0.1:8000"; // Бэкенд адресі
+const API_URL = ""; // Бэкенд адресі // Бэкенд адресі
 
 document.addEventListener('DOMContentLoaded', () => {
     // 1. Подбор беті (major select бар болса)
@@ -122,7 +122,7 @@ function renderResults() {
                     <i class="fas fa-book-open" style="color: var(--primary);"></i> ${res.program_name} (${res.degree})
                 </p>
                 
-                <div style="margin-top: auto; padding-top: 15px; border-top: 1px solid rgba(255, 255, 255, 0.1); display: flex; justify-content: space-between; align-items: center;">
+                <div style=Мамандық"margin-top: auto; padding-top: 15px; border-top: 1px solid rgba(255, 255, 255, 0.1); display: flex; justify-content: space-between; align-items: center;">
                     <div>
                         <span style="display: block; font-size: 0.75rem; color: #94a3b8; text-transform: uppercase; margin-bottom: 4px;">Мүмкіндік</span>
                         <div style="background: ${chanceBg}; color: ${chanceColor}; padding: 6px 12px; border-radius: 8px; font-weight: 800; font-size: 1.1rem; border: 1px solid ${chanceColor}40;">

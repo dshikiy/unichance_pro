@@ -12,13 +12,15 @@
     <header class="header">
         <div class="container nav-container">
             <a href="index.html" class="logo">
-                <img src="static/unichance-logo.svg" alt="UniChance Logo" class="logo-img">
+                <img src="static/logo.jpg" alt="UniChance Logo" class="logo-img" style="border-radius: 8px;">
             </a>
             <nav class="nav-links">
                 <a href="index.html" class="nav-link">Басты бет</a>
                 <a href="input.html" class="nav-link active">Подбор</a>
                 <a href="results.html" class="nav-link">Нәтижелер</a>
                 <a href="profile.html" class="nav-link">Профиль</a>
+                
+                <div id="google_translate_element" style="margin-left: 20px;"></div>
             </nav>
         </div>
     </header>
@@ -67,5 +69,15 @@
 
     <script src="static/app.js"></script>
 
+    <script type="text/javascript">
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+            pageLanguage: 'kk', 
+            includedLanguages: 'kk,ru,en',
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+        }, 'google_translate_element');
+      }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
