@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniChance | Подбор</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="bg-gradient">
+    <header class="header">
+        <div class="container nav-container">
+            <a href="/" class="logo">Uni<span>Chance</span></a>
+            <nav class="nav-links">
+                <a href="/" class="nav-link">Басты бет</a>
+                <a href="/input.html" class="nav-link active">Подбор</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container py-5">
+        <div class="glass-card form-card" style="max-width: 600px; margin: 0 auto;">
+            <h2>Көрсеткіштеріңізді енгізіңіз</h2>
+            <form id="inputForm" style="margin-top: 20px;">
+                <div class="input-group">
+                    <label>IELTS Score (0-9)</label>
+                    <input type="number" id="ielts" step="0.5" min="0" max="9" required>
+                </div>
+                <div class="input-group">
+                    <label>GPA (0-4.0)</label>
+                    <input type="number" id="gpa" step="0.01" min="0" max="4" required>
+                </div>
+                <div class="input-group">
+                    <label>SAT Score (Опционалды)</label>
+                    <input type="number" id="sat" min="400" max="1600">
+                </div>
+                <div class="input-group">
+                    <label>Мамандық</label>
+                    <select id="major" required>
+                        <option value="" disabled selected>Жүктелуде...</option>
+                    </select>
+                </div>
+                <div class="input-group" style="flex-direction: row; align-items: center; gap: 10px;">
+                    <input type="checkbox" id="grant">
+                    <label for="grant" style="margin: 0;">Тек 100% гранттарды көрсету</label>
+                </div>
+                <button type="submit" class="btn-primary w-100 mt-4">Нәтижені көру</button>
+            </form>
+        </div>
+    </main>
+    <script src="/static/app.js"></script>
+</body>
+</html>

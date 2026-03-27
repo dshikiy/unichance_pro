@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniChance | Профиль</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="bg-gradient">
+    <header class="header">
+        <div class="container nav-container">
+            <a href="/" class="logo"><i class="fas fa-graduation-cap"></i> Uni<span>Chance</span></a>
+            <nav class="nav-links">
+                <a href="/" class="nav-link">Басты бет</a>
+                <a href="/input.html" class="nav-link">Подбор</a>
+                <a href="/results.html" class="nav-link">Нәтижелер</a>
+                <a href="/profile.html" class="nav-link active">Профиль</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container py-5">
+        <div class="glass-card" style="max-width: 800px; margin: 0 auto; text-align: center;">
+            <div style="font-size: 4rem; margin-bottom: 20px;">👤</div>
+            <h2 style="margin-bottom: 20px;">Менің профилім</h2>
+            
+            <div style="display: flex; justify-content: center; gap: 30px; margin-bottom: 30px;">
+                <div style="background: rgba(0,0,0,0.2); padding: 15px 30px; border-radius: 12px;">
+                    <p style="color: #aaa; font-size: 0.9rem;">Менің IELTS балым</p>
+                    <h3 id="profileIelts" style="font-size: 1.5rem; color: var(--primary);">0</h3>
+                </div>
+                <div style="background: rgba(0,0,0,0.2); padding: 15px 30px; border-radius: 12px;">
+                    <p style="color: #aaa; font-size: 0.9rem;">Менің GPA балым</p>
+                    <h3 id="profileGpa" style="font-size: 1.5rem; color: var(--primary);">0</h3>
+                </div>
+            </div>
+
+            <a href="/input.html" class="btn-primary">Мәліметтерді жаңарту</a>
+        </div>
+    </main>
+
+    <script src="/static/app.js"></script>
+    <script>
+        // Профильде баллдарды көрсету
+        document.addEventListener('DOMContentLoaded', () => {
+            const userData = JSON.parse(localStorage.getItem('userData'));
+            if (userData) {
+                document.getElementById('profileIelts').textContent = userData.ielts || '0';
+                document.getElementById('profileGpa').textContent = userData.gpa || '0';
+            }
+        });
+    </script>
+</body>
+</html>

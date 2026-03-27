@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniChance | Нәтижелер</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="bg-gradient">
+    <header class="header">
+        <div class="container nav-container">
+            <a href="/" class="logo"><i class="fas fa-graduation-cap"></i> Uni<span>Chance</span></a>
+            <nav class="nav-links">
+                <a href="/" class="nav-link">Басты бет</a>
+                <a href="/input.html" class="nav-link">Подбор</a>
+                <a href="/results.html" class="nav-link active">Нәтижелер</a>
+                <a href="/profile.html" class="nav-link">Профиль</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container py-5">
+        <div class="results-header" data-aos="fade-down" style="margin-bottom: 40px;">
+            <h1 style="color: white; font-size: 2.2rem; font-weight: 800; margin-bottom: 10px;">Сізге сәйкес бағдарламалар</h1>
+            <p style="color: #cbd5e1; font-size: 1.1rem;">
+                Таңдалған мамандық: 
+                <span id="displayMajor" style="color: var(--primary); font-weight: 700; background: rgba(59, 130, 246, 0.15); padding: 5px 15px; border-radius: 20px; border: 1px solid rgba(59, 130, 246, 0.3);">Барлығы</span>
+            </p>
+        </div>
+        
+        <div id="resultsContainer" class="results-grid">
+            <div style="color: white; text-align: center; width: 100%; grid-column: 1/-1;">
+                <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: var(--primary);"></i> Жүктелуде...
+            </div>
+        </div>
+    </main>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="/static/app.js"></script>
+    <script>
+        AOS.init({ duration: 800, once: true });
+    </script>
+</body>
+</html>
