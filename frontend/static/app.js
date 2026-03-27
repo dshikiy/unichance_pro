@@ -1,18 +1,18 @@
 const API_URL = "http://127.0.0.1:8000"; // Бэкенд адресі
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Егер подбор бетінде болсақ (major select бар)
+    // 1. Подбор беті (major select бар болса)
     if (document.getElementById('major')) {
         loadMajors();
         setupInputForm();
     }
     
-    // 2. Егер нәтижелер бетінде болсақ
+    // 2. Нәтижелер беті
     if (document.getElementById('resultsContainer')) {
         renderResults();
     }
 
-    // 3. Егер жеке университет бетінде болсақ
+    // 3. Университет парақшасы
     if (document.getElementById('universityDetails')) {
         loadUniversityDetails();
     }
@@ -40,7 +40,7 @@ function setupInputForm() {
         e.preventDefault();
         
         const submitBtn = inputForm.querySelector('button[type="submit"]');
-        submitBtn.innerHTML = 'Есептелуде...';
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Есептелуде...';
         submitBtn.disabled = true;
 
         const userData = {
@@ -52,6 +52,7 @@ function setupInputForm() {
             country: "Any"
         };
 
+        // Профильде көрсету үшін сақтаймыз
         localStorage.setItem('userData', JSON.stringify(userData));
 
         try {
@@ -72,7 +73,7 @@ function setupInputForm() {
     });
 }
 
-// --- НӘТИЖЕЛЕРДІ ШЫҒАРУ ---
+// --- НӘТИЖЕЛЕРДІ ШЫҒАРУ (PRO ДИЗАЙН) ---
 function renderResults() {
     const resultsContainer = document.getElementById('resultsContainer');
     const displayMajor = document.getElementById('displayMajor');
@@ -80,31 +81,57 @@ function renderResults() {
     const userData = JSON.parse(localStorage.getItem('userData'));
     if (userData && userData.major && displayMajor) {
         displayMajor.textContent = userData.major;
+    } else if (displayMajor) {
+        displayMajor.textContent = "Барлығы";
     }
 
     const results = JSON.parse(localStorage.getItem('searchResults')) || [];
     
+    // Егер ештеңе табылмаса
     if (results.length === 0) {
-        resultsContainer.innerHTML = `<p style="grid-column: 1/-1;">Сәйкес бағдарлама табылмады. Басқа мәліметтер енгізіп көріңіз.</p>`;
+        resultsContainer.innerHTML = `
+            <div class="glass-card" style="grid-column: 1/-1; text-align: center; padding: 40px;">
+                <i class="fas fa-search" style="font-size: 3rem; color: #64748b; margin-bottom: 15px;"></i>
+                <h3 style="color: white; margin-bottom: 10px;">Сәйкес бағдарлама табылмады</h3>
+                <p style="color: #94a3b8;">Грант шартын алып тастап немесе басқа мамандық таңдап көріңіз.</p>
+                <a href="/input.html" class="btn-primary" style="margin-top: 20px;">Қайта іздеу</a>
+            </div>`;
         return;
     }
 
     let html = '';
-    results.forEach(res => {
-        let chanceClass = res.chance >= 80 ? 'chance-high' : (res.chance >= 60 ? 'chance-medium' : 'chance-low');
+    results.forEach((res, index) => {
+        // Шансқа байланысты түс
+        let chanceColor = res.chance >= 80 ? '#10b981' : (res.chance >= 60 ? '#f59e0b' : '#ef4444');
+        let chanceBg = res.chance >= 80 ? 'rgba(16, 185, 129, 0.15)' : (res.chance >= 60 ? 'rgba(245, 158, 11, 0.15)' : 'rgba(239, 68, 68, 0.15)');
 
-        // КАРТАДАҒЫ БАТЫРМА енді university.html-ге апарады
         html += `
-            <div class="glass-card uni-card">
-                <div>
-                    <span style="font-size: 0.9rem; color: #ddd;">📍 ${res.university_city}, ${res.university_country}</span>
-                    ${res.has_full_grant ? '<span class="grant-badge" style="float: right;">100% GRANT</span>' : ''}
-                    <h3 style="margin: 10px 0;">${res.university_name}</h3>
-                    <p><strong>${res.program_name}</strong> (${res.degree})</p>
+            <div class="glass-card uni-card" data-aos="fade-up" data-aos-delay="${(index % 10) * 50}" style="display: flex; flex-direction: column; height: 100%;">
+                
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px;">
+                    <span style="font-size: 0.85rem; color: #94a3b8; display: flex; align-items: center; gap: 5px;">
+                        <i class="fas fa-map-marker-alt"></i> ${res.university_city}, ${res.university_country}
+                    </span>
+                    ${res.has_full_grant ? '<span style="background: rgba(16, 185, 129, 0.2); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.4); padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 800;"><i class="fas fa-award"></i> 100% ГРАНТ</span>' : ''}
                 </div>
-                <div style="margin-top: 20px; display: flex; justify-content: space-between; align-items: center;">
-                    <div class="chance-badge ${chanceClass}">Мүмкіндік: ${res.chance}%</div>
-                    <a href="/university.html?id=${res.program_id}" class="btn-primary" style="padding: 8px 12px;">Толығырақ</a>
+                
+                <h3 style="font-size: 1.25rem; font-weight: 700; color: white; margin-bottom: 8px; line-height: 1.3;">
+                    ${res.university_name}
+                </h3>
+                <p style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 25px; display: flex; align-items: center; gap: 8px;">
+                    <i class="fas fa-book-open" style="color: var(--primary);"></i> ${res.program_name} (${res.degree})
+                </p>
+                
+                <div style="margin-top: auto; padding-top: 15px; border-top: 1px solid rgba(255, 255, 255, 0.1); display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <span style="display: block; font-size: 0.75rem; color: #94a3b8; text-transform: uppercase; margin-bottom: 4px;">Мүмкіндік</span>
+                        <div style="background: ${chanceBg}; color: ${chanceColor}; padding: 6px 12px; border-radius: 8px; font-weight: 800; font-size: 1.1rem; border: 1px solid ${chanceColor}40;">
+                            ${res.chance}%
+                        </div>
+                    </div>
+                    <a href="/university.html?id=${res.program_id}" class="btn-primary" style="padding: 10px 16px; font-size: 0.9rem; text-decoration: none; border-radius: 8px; transition: 0.3s;">
+                        Толығырақ <i class="fas fa-arrow-right" style="margin-left: 5px; font-size: 0.8rem;"></i>
+                    </a>
                 </div>
             </div>
         `;
@@ -116,14 +143,13 @@ function renderResults() {
 // --- ЖЕКЕ УНИВЕРСИТЕТ ПАРАҚШАСЫН ЖҮКТЕУ ---
 async function loadUniversityDetails() {
     const urlParams = new URLSearchParams(window.location.search);
-    const programId = urlParams.get('id'); // Нәтижелерден келген ID
+    const programId = urlParams.get('id'); 
 
     if (!programId) {
         document.getElementById('uniName').textContent = "Университет табылмады";
         return;
     }
 
-    // Әзірге біз нәтижелерді localStorage-тан алып, сол жерден университет ID-сін таба аламыз
     const results = JSON.parse(localStorage.getItem('searchResults')) || [];
     const uniData = results.find(r => r.program_id == programId);
 
