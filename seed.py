@@ -1,14 +1,11 @@
 import sys
 import os
 import random
-from faker import Faker
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from backend.database import SessionLocal, engine
 import backend.models as models
-
-fake = Faker()
 
 # Создаем все таблицы
 models.Base.metadata.create_all(bind=engine)
@@ -23,13 +20,44 @@ def seed():
         db.query(models.University).delete()
         db.commit()
 
-        countries_config = {
-            "Italy": ["Rome", "Milan", "Turin", "Bologna", "Pisa", "Padua"],
-            "Hungary": ["Budapest", "Debrecen", "Szeged", "Pécs"],
-            "Germany": ["Munich", "Berlin", "Aachen", "Heidelberg", "Hamburg"],
-            "Poland": ["Warsaw", "Krakow", "Wroclaw", "Poznan"],
-            "Czechia": ["Prague", "Brno", "Ostrava"]
-        }
+        # НАҒЫЗ ЕУРОПА УНИВЕРСИТЕТТЕРІНІҢ ТІЗІМІ
+        REAL_UNIS = [
+            # Italy
+            ("Sapienza University of Rome", "Italy", "Rome"),
+            ("Politecnico di Milano", "Italy", "Milan"),
+            ("University of Bologna", "Italy", "Bologna"),
+            ("University of Padua", "Italy", "Padua"),
+            ("Politecnico di Torino", "Italy", "Turin"),
+            ("University of Pisa", "Italy", "Pisa"),
+            ("University of Milan", "Italy", "Milan"),
+            # Germany
+            ("Technical University of Munich", "Germany", "Munich"),
+            ("LMU Munich", "Germany", "Munich"),
+            ("Heidelberg University", "Germany", "Heidelberg"),
+            ("RWTH Aachen University", "Germany", "Aachen"),
+            ("Humboldt University of Berlin", "Germany", "Berlin"),
+            ("University of Hamburg", "Germany", "Hamburg"),
+            ("Technical University of Berlin", "Germany", "Berlin"),
+            # Hungary
+            ("Eötvös Loránd University", "Hungary", "Budapest"),
+            ("University of Szeged", "Hungary", "Szeged"),
+            ("University of Debrecen", "Hungary", "Debrecen"),
+            ("Budapest University of Technology and Economics", "Hungary", "Budapest"),
+            ("University of Pécs", "Hungary", "Pécs"),
+            # Poland
+            ("University of Warsaw", "Poland", "Warsaw"),
+            ("Jagiellonian University", "Poland", "Krakow"),
+            ("Warsaw University of Technology", "Poland", "Warsaw"),
+            ("Adam Mickiewicz University", "Poland", "Poznan"),
+            ("University of Wroclaw", "Poland", "Wroclaw"),
+            # Czechia
+            ("Charles University", "Czechia", "Prague"),
+            ("Czech Technical University", "Czechia", "Prague"),
+            ("Masaryk University", "Czechia", "Brno"),
+            ("Brno University of Technology", "Czechia", "Brno"),
+            ("Palacký University", "Czechia", "Olomouc"),
+            ("Technical University of Ostrava", "Czechia", "Ostrava")
+        ]
 
         majors_list = [
             "Computer Science", "Data Science", "Artificial Intelligence",
@@ -40,19 +68,19 @@ def seed():
         
         deadlines_list = ["2026-05-15", "2026-06-01", "2026-07-15", "2026-08-01"]
 
-        print("🚀 Генерация 100 университетов...")
+        print(f"🚀 Генерация {len(REAL_UNIS)} реальных университетов...")
         all_programs = []
 
-        for i in range(100):
-            country = random.choice(list(countries_config.keys()))
-            city = random.choice(countries_config[country])
+        for uni_name, country, city in REAL_UNIS:
+            # Уинверситеттің атынан автоматты түрде ресми сайттың сілтемесін құрастыру
+            website_domain = uni_name.split()[0].lower().replace("ö", "o")
             
             uni = models.University(
-                name=f"{fake.company()} University of {city}" if i > 10 else f"{city} State University",
+                name=uni_name,
                 country=country,
                 city=city,
-                description=f"Top-tier educational institution in {country}. Known for its research and international community.",
-                website=f"https://www.{fake.domain_name()}"
+                description=f"Top-tier educational institution in {country}. Located in the beautiful city of {city}, known for its excellent research and international community.",
+                website=f"https://www.{website_domain}.edu"
             )
             db.add(uni)
             db.flush()
@@ -102,7 +130,7 @@ def seed():
                 db.add(sch)
 
         db.commit()
-        print(f"✅ Успешно! Создано 100 университетов и {len(all_programs)} программ.")
+        print(f"✅ Успешно! Создано {len(REAL_UNIS)} университетов и {len(all_programs)} программ.")
 
     except Exception as e:
         db.rollback()

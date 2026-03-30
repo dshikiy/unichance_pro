@@ -236,13 +236,36 @@ select option { background: var(--bg-dark); color: white; }
 }
 
 /* =========================================
-   10. ТІЛ АУЫСТЫРҒЫШ ЖӘНЕ GOOGLE TRANSLATE
+   10. ТІЛ АУЫСТЫРҒЫШ ЖӘНЕ GOOGLE TRANSLATE (БАННЕРДІ ЖОЮ)
 ========================================= */
-/* Google-дің үстінен шығатын баннерлерін жасыру */
-body { top: 0px !important; position: static !important; }
-.goog-te-banner-frame { display: none !important; }
-#goog-gt-tt { display: none !important; } 
+/* Google-дің жоғарыдан шығатын баннерін толық өшіру */
+iframe.goog-te-banner-frame {
+    display: none !important;
+    visibility: hidden !important;
+}
 
+/* Баннер шыққанда сайт төмен түсіп кетпеуі үшін */
+body {
+    top: 0px !important; 
+    position: static !important;
+}
+
+/* Басқа да Google элементтерін (мысалы, оригинал тексті көрсететін подсказка) жасыру */
+.skiptranslate {
+    display: none !important;
+}
+
+#goog-gt-tt, .goog-tooltip {
+    display: none !important;
+}
+
+.goog-text-highlight {
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+}
+
+/* Біздің әдемі тіл ауыстырғыш кнопкалар */
 .custom-lang-selector {
     display: flex;
     gap: 8px;
