@@ -11,7 +11,7 @@
     <header class="header">
         <div class="container nav-container">
             <a href="index.html" class="logo">
-                <img src="static/logo.jpg" alt="UniChance Logo" class="logo-img" style="border-radius: 8px;">
+                <img src="static/unichance-logo.svg" alt="UniChance Logo" class="logo-img">
             </a>
             <nav class="nav-links">
                 <a href="/" class="nav-link">Басты бет</a>
@@ -46,7 +46,7 @@
         new google.translate.TranslateElement({
             pageLanguage: 'kk', 
             includedLanguages: 'kk,ru,en',
-            layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            autoDisplay: false
         }, 'google_translate_element');
       }
     </script>
@@ -54,11 +54,12 @@
 
     <script>
         function changeLanguage(langCode) {
-            var select = document.querySelector('.goog-te-combo');
-            if (select) {
-                select.value = langCode;
-                select.dispatchEvent(new Event('change'));
+            if (langCode === 'kk') {
+                document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            } else {
+                document.cookie = "googtrans=/kk/" + langCode + "; path=/;";
             }
+            window.location.reload();
         }
     </script>
 </body>
