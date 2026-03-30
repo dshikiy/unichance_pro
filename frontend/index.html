@@ -9,20 +9,22 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     
-    <link rel="stylesheet" href="static/style.css">
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body class="bg-gradient">
 
     <header class="header">
         <div class="container nav-container">
-            <a href="index.html" class="logo">
-                <img src="static/unichance-logo.svg" alt="UniChance Logo" class="logo-img">
+            <a href="/index.html" class="logo">
+                <img src="/static/unichance-logo.svg" alt="UniChance Logo" class="logo-img">
             </a>
             <nav class="nav-links">
-                <a href="index.html" class="nav-link active">Басты бет</a>
-                <a href="input.html" class="nav-link">Подбор</a>
-                <a href="results.html" class="nav-link">Нәтижелер</a>
-                <a href="profile.html" class="nav-link">Профиль</a>
+                <a href="/index.html" class="nav-link active">Басты бет</a>
+                <a href="/input.html" class="nav-link">Подбор</a>
+                <a href="/results.html" class="nav-link">Нәтижелер</a>
+                
+                <a id="nav-profile" href="/profile.html" class="nav-link" style="display: none;">Профиль</a>
+                <a id="nav-login" href="/login.html" class="btn-outline" style="margin-left: 20px; padding: 6px 15px; font-size: 0.9rem;">Кіру</a>
                 
                 <div id="google_translate_element" style="display: none;"></div>
                 
@@ -48,7 +50,7 @@
                         университеттеріне түсу мүмкіндігіңізді 1 минутта біліңіз.
                     </p>
                     <div class="hero-btns">
-                        <a href="input.html" class="btn-primary">
+                        <a href="/input.html" class="btn-primary">
                             Мүмкіндікті есептеу <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
@@ -89,9 +91,19 @@
     </footer>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="static/app.js"></script>
+    <script src="/static/app.js"></script>
     <script>
         AOS.init({ duration: 800, once: true });
+        
+        // ПАЙДАЛАНУШЫ КІРІП ТҰР МА ТЕКСЕРУ
+        document.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('isLoggedIn') === 'true') {
+                const navLogin = document.getElementById('nav-login');
+                const navProfile = document.getElementById('nav-profile');
+                if (navLogin) navLogin.style.display = 'none';
+                if (navProfile) navProfile.style.display = 'inline-block';
+            }
+        });
     </script>
 
     <script type="text/javascript">
@@ -108,12 +120,10 @@
     <script>
         function changeLanguage(langCode) {
             if (langCode === 'kk') {
-                // Полностью убиваем куки Google Translate для казахского языка (возвращаем оригинал)
                 document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
                 document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=" + window.location.hostname;
                 document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=." + window.location.hostname;
             } else {
-                // Включаем Google переводчик только для RU и EN
                 document.cookie = "googtrans=/kk/" + langCode + "; path=/;";
                 document.cookie = "googtrans=/kk/" + langCode + "; path=/; domain=." + window.location.hostname;
             }

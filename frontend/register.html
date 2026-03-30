@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniChance | Регистрация</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="bg-gradient">
+
+    <header class="header">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <img src="/static/unichance-logo.svg" alt="UniChance Logo" class="logo-img">
+            </a>
+            <nav class="nav-links">
+                <a href="/index.html" class="nav-link">Басты бет</a>
+                <a href="/login.html" class="nav-link">Кіру</a>
+                <a href="/register.html" class="nav-link active">Тіркелу</a>
+                
+                <div class="custom-lang-selector">
+                    <button class="lang-btn" onclick="changeLanguage('kk')">KZ</button>
+                    <button class="lang-btn" onclick="changeLanguage('ru')">RU</button>
+                    <button class="lang-btn" onclick="changeLanguage('en')">EN</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container py-5">
+        <div class="glass-card form-card" style="max-width: 450px;">
+            <h2 style="text-align: center; margin-bottom: 10px;">Жаңа аккаунт</h2>
+            <p style="text-align: center; color: var(--text-muted); margin-bottom: 30px;">Платформаға тіркелу</p>
+
+            <form id="registerForm">
+                <div class="input-group">
+                    <label>Аты-жөніңіз (Имя)</label>
+                    <input type="text" id="fullname" placeholder="Алихан Болатов" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Email</label>
+                    <input type="email" id="email" placeholder="mail@example.com" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Құпия сөз (Пароль)</label>
+                    <input type="password" id="password" placeholder="••••••••" required>
+                </div>
+
+                <button type="submit" class="btn-primary w-100 mt-4">
+                    Тіркелу (Зарегистрироваться)
+                </button>
+                
+                <p style="text-align: center; margin-top: 20px; color: var(--text-muted); font-size: 0.9rem;">
+                    Аккаунтыңыз бар ма? <a href="/login.html" style="color: var(--primary); text-decoration: none; font-weight: bold;">Кіру</a>
+                </p>
+            </form>
+        </div>
+    </main>
+
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('fullname').value;
+            const email = document.getElementById('email').value;
+            
+            // Сохраняем данные нового пользователя
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('userName', name);
+            localStorage.setItem('userEmail', email);
+            
+            alert('Тіркелу сәтті өтті! (Регистрация успешна!)');
+            window.location.href = '/input.html'; // Отправляем подбирать универы
+        });
+
+        function changeLanguage(langCode) {
+            if (langCode === 'kk') {
+                document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=." + window.location.hostname;
+            } else {
+                document.cookie = "googtrans=/kk/" + langCode + "; path=/;";
+                document.cookie = "googtrans=/kk/" + langCode + "; path=/; domain=." + window.location.hostname;
+            }
+            window.location.reload();
+        }
+    </script>
+</body>
+</html>
