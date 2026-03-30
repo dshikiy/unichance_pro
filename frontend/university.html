@@ -55,9 +55,14 @@
     <script>
         function changeLanguage(langCode) {
             if (langCode === 'kk') {
+                // Полностью убиваем куки Google Translate для казахского языка (возвращаем оригинал)
                 document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=" + window.location.hostname;
+                document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=." + window.location.hostname;
             } else {
+                // Включаем Google переводчик только для RU и EN
                 document.cookie = "googtrans=/kk/" + langCode + "; path=/;";
+                document.cookie = "googtrans=/kk/" + langCode + "; path=/; domain=." + window.location.hostname;
             }
             window.location.reload();
         }
